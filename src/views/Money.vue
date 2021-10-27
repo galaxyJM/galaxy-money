@@ -1,6 +1,8 @@
 <template>
   <div class="wrapper">
-    money
+    <div class="content">
+      money
+    </div>
     <Nav/>
   </div>
 
@@ -13,11 +15,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .wrapper {
   display: flex;
   flex-direction: column;
   border: 1px solid red;
+  height: 100vh;
 
 }
+.content{
+  overflow: auto;
+  flex-grow: 1;   //让content占满剩余空间
+}
+
 </style>

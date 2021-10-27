@@ -14,6 +14,13 @@ export default {
 
 <style scoped>
     .nav{
-        text-decoration: none;
+      display: flex;
+      justify-content: space-between;
     }
+    a{
+      text-decoration: none;
+      color: black;
+    }
+
+
 </style>
