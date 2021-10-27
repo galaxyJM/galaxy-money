@@ -3,12 +3,14 @@ import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 import store from './store'
-import Nav from "@/views/Nav.vue"
+import Nav from "@/components/Nav.vue"
+import Notfound from "@/components/Notfound.vue"
 
 
 Vue.config.productionTip = false
 
 Vue.component('Nav',Nav)
+Vue.component('Notfound',Notfound)
 
 new Vue({
   router,
