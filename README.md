@@ -1,29 +1,8 @@
 # moremoney
+## 这是一个简易的记账web应用
 
-## Project setup
-```
+## 如何安装环境
 npm install
-```
 
-### Compiles and hot-reloads for development
-```
+## 如何开始
 npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
