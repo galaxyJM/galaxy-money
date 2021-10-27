@@ -1,18 +1,19 @@
 <template>
-  <Layout>
-    sssssss
-  </Layout>
+  <div class="wrapper">
+    <div class="content">
+      <slot></slot>
+    </div>
+    <Nav/>
+  </div>
 </template>
 
-<script lang="ts">
-
+<script>
 export default {
-  name: "Statistics"
+  name: "Layout"
 }
-
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -22,7 +23,6 @@ export default {
 }
 .content{
   overflow: auto;
-  flex-grow: 1;   //让content占满剩余空间
+  flex-grow: 1;
 }
-
 </style>
