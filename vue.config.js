@@ -11,6 +11,7 @@ module.exports = {
         .include.add(dir).end()   //定义一个规则 包含icons
         .use('svg-sprite-loader').loader('svg-sprite-loader').options({extract:false}).end()
 
+
     config.plugin('svg-sprite').use(require('svg-sprite-loader/plugin'),[{plainSprite:true}])  //配置插件
 
     config.module.rule('svg').exclude.add(dir)  //让其他的svg不使用上述规则
