@@ -1,14 +1,14 @@
 <template>
   <div class="nav">
-    <router-link to="/labels" class="item">
+    <router-link to="/labels" class="item" active-class="selected">
       <Icon name="labels"/>
       <div>标签</div>
     </router-link>
-    <router-link to="/money" class="item">
+    <router-link to="/money" class="item" active-class="selected">
       <Icon name="money"/>
       <div>记一笔</div>
     </router-link>
-    <router-link to="/statistics" class="item">
+    <router-link to="/statistics" class="item" active-class="selected">
       <Icon name="statistics"/>
       <div>统计</div>
     </router-link>
@@ -40,6 +40,9 @@ export default {
 .nav {
   display: flex;
   justify-content: space-around;
+  border-top: grey;
+  background: rgba(241,241,241,.5);
+  padding-top: 10px;
   .item{
     display: flex;
     flex-direction: column;
@@ -48,6 +51,9 @@ export default {
   }
   .icon{
     font-size: 32px;
+  }
+  .item.selected{
+    color: #FF6600;
   }
 
 }
