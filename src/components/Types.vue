@@ -1,15 +1,29 @@
 <template>
   <div class="types">
     <ul>
-      <li class="selected">支出</li>
-      <li>收入</li>
+      <li :class="type === '-' && 'selected'" @click="changeType('-')" :style="type === '-' && ''">支出</li>    <!--当type为‘-’时，给支出加上selected属性-->
+      <li :class="type === '+' && 'selected'" @click="changeType('+')" :style="type === '-' && '&.selected::after{left: 62.5%}'">收入</li>
     </ul>
   </div>
 </template>
 
-<script lang="ts">
+<script lang="js">
 export default {
-  name: "Types"
+  name: "Types",
+  data(){
+    return {
+      type: '-', //支出用‘-’表示 收入用‘+’表示
+    }
+  },
+  methods:{
+    changeType(type){
+      if(type !== '-' && type !== '+')
+      {
+        throw new Error('type is wrong')
+      }
+      this.type = type
+    }
+  }
 }
 </script>
 
@@ -20,21 +34,23 @@ export default {
   ul {
     display: flex;
     padding: 10px 0 10px 0;
-    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
     background: #c4c4c4;
-    position: relative;
 
     li {
+      width: 50%;
       line-height: 64px;
       font-size: 24px;
-
+      position: relative;
+      text-align: center;
       &.selected::after {
         content: '';
         background: black;
         height: 4px;
-        bottom: 15px;
-        left: 12.5%;
-        width: 25%;
+        bottom: 10px;
+        left: 25%;
+        width: 50%;
         position: absolute;
       }
     }
