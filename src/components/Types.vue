@@ -1,30 +1,48 @@
 <template>
   <div class="types">
     <ul>
-      <li :class="type === '-' && 'selected'" @click="changeType('-')" :style="type === '-' && ''">支出</li>    <!--当type为‘-’时，给支出加上selected属性-->
-      <li :class="type === '+' && 'selected'" @click="changeType('+')" :style="type === '-' && '&.selected::after{left: 62.5%}'">收入</li>
+      <li :class="type === '-' && 'selected'" @click="changeType('-')">支出</li>
+      <!--当type为‘-’时，给支出加上selected属性-->
+      <li :class="type === '+' && 'selected'" @click="changeType('+')">收入</li>
     </ul>
   </div>
 </template>
 
-<script lang="js">
-export default {
-  name: "Types",
-  data(){
-    return {
-      type: '-', //支出用‘-’表示 收入用‘+’表示
-    }
-  },
-  methods:{
-    changeType(type){
+<script lang="ts">
+//ts写法
+import Vue from 'vue';
+import {Component} from "vue-property-decorator";
+
+@Component
+export default class Types extends Vue{
+  type = '-';
+  changeType(type: string){
       if(type !== '-' && type !== '+')
       {
-        throw new Error('type is wrong')
+        throw new Error('type is wrong');
       }
-      this.type = type
+      this.type = type;
     }
-  }
+
 }
+// js写法
+// export default {
+//   name: "Types",
+//   data(){
+//     return {
+//       type: '-', //支出用‘-’表示 收入用‘+’表示
+//     }
+//   },
+//   methods:{
+//     changeType(type){
+//       if(type !== '-' && type !== '+')
+//       {
+//         throw new Error('type is wrong')
+//       }
+//       this.type = type
+//     }
+//   }
+// }
 </script>
 
 <style lang="scss" scoped>
