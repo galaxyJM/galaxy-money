@@ -37,31 +37,30 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../assets/style/reset.scss";
+
 .nav {
   display: flex;
   justify-content: space-around;
   border-top: grey;
-  background: rgba(241,241,241,.5);
+  background: rgba(241, 241, 241, .5);
   padding-top: 10px;
-  .item{
+
+  .item {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
-  .icon{
+
+  .icon {
     font-size: 32px;
   }
-  .item.selected{
+
+  .item.selected {
     color: #FF6600;
   }
 
 }
-
-a {
-  text-decoration: none;
-  color: black;
-}
-
 
 </style>
