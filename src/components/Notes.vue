@@ -2,16 +2,21 @@
   <div class="notes">
     <label>
       <span>备注:</span>
-      <input type="text" placeholder="请输入你想写的话">
+      <input type="text" v-model="value" placeholder="请输入你想写的话">
     </label>
   </div>
 </template>
 
-<script>
-export default {
-  name: "Notes"
+<script lang="ts">
+import Vue from 'vue';
+import {Component} from "vue-property-decorator";
+
+@Component
+export default class Notes extends Vue {
+  value = '';
 }
 </script>
+
 
 <style lang="scss" scoped>
 @import "../assets/style/reset.scss";
