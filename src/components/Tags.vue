@@ -1,7 +1,7 @@
 <template>
   <div class="tags">
     <ul>
-      <li v-for="item in allTags" :key="item" @click="toggle(item)"
+      <li v-for="(item,index) in allTags" :key="index" @click="toggle(item)"
          :class="{selected: currentTags.indexOf(item)>=0}">
         <!--表示当currentTags.indexOf(item)>=0这个表达式为true时，selected属性添加上去-->
         <Icon :name="item"/>
@@ -45,7 +45,7 @@ export default class Tags extends Vue{
       if(name === ''){
         window.alert('输入内容不能为空')
       }else if(this.allTags){
-        this.$emit('update:allTags',[...this.allTags,name])
+        this.$emit('update:allTags',[...this.allTags,name]);
       }
     }
 }
