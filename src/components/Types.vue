@@ -1,9 +1,9 @@
 <template>
   <div class="types">
     <ul>
-      <li :class="type === '-' && 'selected'" @click="changeType('-')">支出</li>
+      <li :class="value === '-' && 'selected'" @click="changeType('-')">支出</li>
       <!--当type为‘-’时，给支出加上selected属性-->
-      <li :class="type === '+' && 'selected'" @click="changeType('+')">收入</li>
+      <li :class="value === '+' && 'selected'" @click="changeType('+')">收入</li>
     </ul>
   </div>
 </template>
@@ -11,19 +11,18 @@
 <script lang="ts">
 //ts写法
 import Vue from 'vue';
-import {Component} from "vue-property-decorator";
+import {Component, Prop} from "vue-property-decorator";
 
 @Component
-export default class Types extends Vue{
-  type = '-';
-  changeType(type: string){
-      if(type !== '-' && type !== '+')
-      {
-        throw new Error('type is wrong');
-      }
-      this.type = type;
-    }
+export default class Types extends Vue {
+  @Prop(String) value: string | undefined;
 
+  changeType(type: string) {
+    if (type !== '-' && type !== '+') {
+      throw new Error('type is wrong');
+    }
+    this.$emit('update:value', type);
+  }
 }
 // js写法
 // export default {
@@ -62,6 +61,7 @@ export default class Types extends Vue{
       font-size: 24px;
       position: relative;
       text-align: center;
+
       &.selected::after {
         content: '';
         background: black;

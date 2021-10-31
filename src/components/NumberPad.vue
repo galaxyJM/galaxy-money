@@ -13,7 +13,7 @@
       <button @click="inputNum">7</button>
       <button @click="inputNum">8</button>
       <button @click="inputNum">9</button>
-      <button class="ok">完成</button>
+      <button @click="ok" class="ok">完成</button>
       <button @click="inputNum" class="zero">0</button>
       <button @click="inputNum">.</button>
 
@@ -28,6 +28,9 @@ import {Component} from "vue-property-decorator";
 @Component
 export default class NumberPad extends Vue {
   output = '0';
+  ok(){
+    this.$emit('update:number',this.output);
+  }
   inputNum(event: MouseEvent) {
     const button = (event.target as HTMLButtonElement); //强制执行类型，这样就无需判断e.target是否为空（ts会检查）
     const input = button.textContent as string;  //理由同上 或直接加！ 写button.textContent！ 排除空的情况
