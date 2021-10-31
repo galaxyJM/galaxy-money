@@ -9,6 +9,7 @@ a{
   text-decoration: none;
   color: black;
 }
+button:focus{outline:0;}
 
 %clearfix{
   &::after{

@@ -1,56 +1,14 @@
 <template>
   <div class="tags">
     <ul>
-      <li>
-        <Icon name="cloth"/>
-        衣
-      </li>
-      <li>
-        <Icon name="food"/>
-        食
-      </li>
-      <li>
-        <Icon name="home"/>
-        住
-      </li>
-      <li>
-        <Icon name="walk"/>
-        行
-      </li>
-      <li>
-        <Icon name="cloth"/>
-        衣
-      </li>
-      <li>
-        <Icon name="food"/>
-        食
-      </li>
-      <li>
-        <Icon name="home"/>
-        住
-      </li>
-      <li>
-        <Icon name="walk"/>
-        行
-      </li>
-      <li>
-        <Icon name="cloth"/>
-        衣
-      </li>
-      <li>
-        <Icon name="food"/>
-        食
-      </li>
-      <li>
-        <Icon name="home"/>
-        住
-      </li>
-      <li>
-        <Icon name="walk"/>
-        行
+      <li v-for="item in allTags" :key="item" @click="toggle(item)"
+         :class="{selected: currentTags.indexOf(item)>=0}">
+        <!--表示当currentTags.indexOf(item)>=0这个表达式为true时，selected属性添加上去-->
+        <Icon :name="item"/>
+        {{item}}
       </li>
     </ul>
-    <button>
+    <button @click="addNew">
       新增标签
     </button>
   </div>
@@ -58,18 +16,38 @@
 
 <script lang="ts">
 // 一次性引入整个目录
+import Vue from "vue";
+import {Component, Prop} from "vue-property-decorator";
+
 let importAll = (requireContext: __WebpackModuleApi.RequireContext) => {
   requireContext.keys().forEach(requireContext);
 }
-
 try {
   importAll(require.context('../assets/icons', true, /\.svg$/));
 } catch (error) {
   console.log(error);
 }
 
-export default {
-  name: "Tags"
+@Component
+export default class Tags extends Vue{
+    @Prop(Array) readonly allTags: string[] | undefined;
+    currentTags: string[] = [];
+    toggle(item : string) {
+        const index = this.currentTags.indexOf(item)
+        if (index >= 0) {
+          this.currentTags.splice(index,1);
+        }else{
+          this.currentTags.push(item);
+        }
+    }
+    addNew(){
+      const name = window.prompt('请输入标签名');
+      if(name === ''){
+        window.alert('输入内容不能为空')
+      }else if(this.allTags){
+        this.$emit('update:allTags',[...this.allTags,name])
+      }
+    }
 }
 </script>
 
@@ -78,24 +56,24 @@ export default {
 .tags {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-
+  height: 50vh;
   ul {
     display: flex;
     flex-wrap: wrap;
-
+    width: 100%;
     li {
       display: flex;
       width: 20%;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
       font-size: 16px;
       margin-top: 30px;
-
       .icon {
         font-size: 36px;
+      }
+      &.selected{
+        color: skyblue;
       }
     }
   }
