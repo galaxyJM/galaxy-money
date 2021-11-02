@@ -18,7 +18,8 @@ module.exports = {
     "@typescript-eslint/explicit-module-boundary-types": 0
   },
   "globals": {
-    "__WebpackModuleApi": true
+    "__WebpackModuleApi": true,
+    "RecordItem": true
   },
   overrides: [
     {
