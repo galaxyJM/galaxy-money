@@ -30,6 +30,8 @@ export default class NumberPad extends Vue {
   output = '0';
   ok(){
     this.$emit('update:number',this.output);
+    this.$emit('saveToDb',this.output);
+    this.output = '0';
   }
   inputNum(event: MouseEvent) {
     const button = (event.target as HTMLButtonElement); //强制执行类型，这样就无需判断e.target是否为空（ts会检查）
