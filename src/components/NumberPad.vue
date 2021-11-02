@@ -50,7 +50,6 @@ export default class NumberPad extends Vue {
       return;
     }
     this.output += input;
-    console.log(1);
   }
 
   backspace() {

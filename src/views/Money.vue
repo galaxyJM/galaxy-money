@@ -23,19 +23,22 @@ type Record = {
   currentTag: string[]
   notes: string
   number: number
+  createTime: string  //日期类
 }
+
 
 @Component(
     {components: {Tags, Notes, NumberPad, Types}}
 )
 export default class Money extends Vue {
   allTags = ['衣', '食', '住', '行'];
-  recordList: Record[] = [];
+  recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList') || '[]');
   record: Record = {
     type: '-',
     currentTag: [],
     notes: '',
-    number: 0
+    number: 0,
+    createTime: ''
   }
 
   onTagsChange(currentTag: string[]) {
@@ -51,8 +54,9 @@ export default class Money extends Vue {
   }
 
   saveToDb() {
-    const deepClone = JSON.parse(JSON.stringify(this.record));
+    const deepClone: Record = JSON.parse(JSON.stringify(this.record));
     //深拷贝 每次record发生改变时创建一个新的record(一个新的地址）
+    deepClone.createTime = new Date().toLocaleString();
     this.recordList.push(deepClone);
   }
 
