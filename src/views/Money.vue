@@ -15,14 +15,14 @@ import Notes from "@/components/Notes.vue";
 import Tags from "@/components/Tags.vue";
 import Vue from "vue";
 import {Component, Watch} from "vue-property-decorator";
-import model from "@/model";
+import recordListModel from "@/models/recordListModel";
 
 @Component(
     {components: {Tags, Notes, NumberPad, Types}}
 )
 export default class Money extends Vue {
   allTags = ['衣', '食', '住', '行'];
-  recordList = model.fetch();
+  recordList = recordListModel.fetch();
   record: RecordItem = {
     type: '-',
     currentTag: [],
@@ -44,7 +44,7 @@ export default class Money extends Vue {
   }
 
   saveToDb() {
-    const deepClone: RecordItem = model.clone(this.record);
+    const deepClone: RecordItem = recordListModel.clone(this.record);
     //深拷贝 每次record发生改变时创建一个新的record(一个新的地址）
     deepClone.createTime = new Date().toLocaleString();
     this.recordList.push(deepClone);
@@ -52,7 +52,7 @@ export default class Money extends Vue {
 
   @Watch('recordList')
   onRecordChange(recordList: RecordItem[]) {
-    model.save(recordList)
+    recordListModel.save(recordList)
   }
 }
 </script>
