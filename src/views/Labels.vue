@@ -1,28 +1,16 @@
 <template>
   <Layout>
     <Types/>
-    <ol class="tagsList">
-      <li>
-        <span><Icon name='衣'/>衣</span>
+    <div class="tagsList">
+      <div v-for="tag in tags" :key="tag.id">
+        <span><Icon :name='tag.name'/>{{tag.name}}</span>
         <Icon name='arrow'/>
-      </li>
-      <li>
-        <span><Icon name='食'/>食</span>
-        <Icon name='arrow'/>
-      </li>
-      <li>
-        <span><Icon name='住'/>住</span>
-        <Icon name='arrow'/>
-      </li>
-      <li>
-        <span><Icon name='行'/>行</span>
-        <Icon name='arrow'/>
-      </li>
-      <li>
+      </div>
+      <div @click="createNew">
         <span><Icon name='edit'/>新建标签</span>
         <Icon name='arrow'/>
-      </li>
-    </ol>
+      </div>
+    </div>
 
   </Layout>
 </template>
@@ -31,14 +19,28 @@
 import Types from "@/components/Types.vue";
 import Vue from "vue";
 import {Component} from "vue-property-decorator";
-import tagListModel from "@/models/tagListModel";
+import tagListModel from "@/models/tagListModel.ts";
 
-tagListModel
+
 @Component(
     {components: {Types}}
 )
 export default class Labels extends Vue {
-  tagListModel
+  tags = tagListModel.fetch();
+
+  createNew() {
+    const name = window.prompt('请输入你想创建的标签名称');
+    if (name === '') {
+      window.alert('输入的标签值不能为空');
+    } else if (name) {
+      const error = tagListModel.create(name);
+      if (error === 'duplicated') {
+        window.alert('标签名已存在，请更改标签名');
+      } else if (error === 'success') {
+        window.alert('添加成功');
+      }
+    }
+  }
 }
 </script>
 
@@ -46,7 +48,8 @@ export default class Labels extends Vue {
 .tagsList {
   display: flex;
   flex-direction: column;
-  li {
+
+  div {
     border-bottom: 1px solid dimgrey;
     display: flex;
     justify-content: space-between;
@@ -54,10 +57,12 @@ export default class Labels extends Vue {
     height: 48px;
     padding: 0 16px 0 16px;
     font-size: 20px;
+
     .icon {
       margin: 4px 10px 0 0;
     }
-    &:last-child{
+
+    &:last-child {
       font-size: 15px;
     }
   }
