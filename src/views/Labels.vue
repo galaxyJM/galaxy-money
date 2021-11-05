@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <Types/>
+    <Types :value.sync="type"/>
     <div class="tagsList">
       <router-link class="tag" :to="`/labels/edit/${tag.id}`" v-for="tag in tags" :key="tag.id">
         <span><Icon :name='tag.name'/>{{ tag.name }}</span>
@@ -27,7 +27,7 @@ import tagListModel from "@/models/tagListModel.ts";
 )
 export default class Labels extends Vue {
   tags = tagListModel.fetch();
-
+  type = '-';
   createNew() {
     const name = window.prompt('请输入你想创建的标签名称');
     if (name === '') {

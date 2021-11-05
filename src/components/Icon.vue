@@ -1,5 +1,6 @@
 <template>
-   <svg class="icon">
+  <!-- 组件名无法直接传递事件，要从组件内部传递click事件-->
+  <svg class="icon" @click="$emit('click', $event)">
      <use :xlink:href="'#'+ name"></use>
    </svg>
 </template>

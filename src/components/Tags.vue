@@ -4,12 +4,12 @@
       <li v-for="item in allTags" :key="item.id" @click="toggle(item.name)"
           :class="{selected: currentTags.indexOf(item.name)>=0}">
         <!--表示当currentTags.indexOf(item)>=0这个表达式为true时，selected属性添加上去-->
-        <Icon :name="item.id"/>
+        <Icon :name="item.name"/>
         {{ item.name }}
       </li>
     </ul>
     <button>
-      <router-link to="/labels">新增标签</router-link>
+      <router-link to="/labels">编辑标签列表</router-link>
     </button>
   </div>
 </template>

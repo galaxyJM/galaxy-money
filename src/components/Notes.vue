@@ -2,7 +2,7 @@
   <div class="notes">
     <label>
       <span>{{this.editName}}</span>
-      <input type="text" v-model="value" :placeholder="placeholder">
+      <input type="text" :value="value" @input='onValueChange($event.target.value)' :placeholder="placeholder">
     </label>
   </div>
 </template>
@@ -13,7 +13,7 @@ import {Component,Prop,Watch} from "vue-property-decorator";
 
 @Component
 export default class Notes extends Vue {
-  value = '';
+  @Prop({default: ''}) value! : string
   @Prop({required: true}) editName! : string
   @Prop() placeholder! : string
   @Watch('value')
