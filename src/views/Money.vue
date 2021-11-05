@@ -2,7 +2,7 @@
   <Layout>
     <Types :value.sync="record.type"/>
     <Tags :all-tags.sync="allTags" @update:tags="onTagsChange"/>
-    <Notes @update:notes="onNotesChange"/>
+    <Notes edit-name="备注：" placeholder="请输入你想说的话" @update:notes="onNotesChange"/>
     <NumberPad @update:number="onNumberChange" @saveToDb="saveToDb"/>
   </Layout>
 
@@ -16,12 +16,13 @@ import Tags from "@/components/Tags.vue";
 import Vue from "vue";
 import {Component, Watch} from "vue-property-decorator";
 import recordListModel from "@/models/recordListModel";
+import tagListModel from "@/models/tagListModel";
 
 @Component(
     {components: {Tags, Notes, NumberPad, Types}}
 )
 export default class Money extends Vue {
-  allTags = ['衣', '食', '住', '行'];
+  allTags = tagListModel.fetch();
   recordList = recordListModel.fetch();
   record: RecordItem = {
     type: '-',

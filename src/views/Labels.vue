@@ -2,10 +2,10 @@
   <Layout>
     <Types/>
     <div class="tagsList">
-      <div v-for="tag in tags" :key="tag.id">
-        <span><Icon :name='tag.name'/>{{tag.name}}</span>
+      <router-link class="tag" :to="`/labels/edit/${tag.id}`" v-for="tag in tags" :key="tag.id">
+        <span><Icon :name='tag.name'/>{{ tag.name }}</span>
         <Icon name='arrow'/>
-      </div>
+      </router-link>
       <div @click="createNew">
         <span><Icon name='edit'/>新建标签</span>
         <Icon name='arrow'/>
@@ -45,11 +45,13 @@ export default class Labels extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import "../assets/style/reset.scss";
+
 .tagsList {
   display: flex;
   flex-direction: column;
 
-  div {
+  .tag {
     border-bottom: 1px solid dimgrey;
     display: flex;
     justify-content: space-between;
@@ -61,12 +63,23 @@ export default class Labels extends Vue {
     .icon {
       margin: 4px 10px 0 0;
     }
+  }
+  div {
+    border-bottom: 1px solid dimgrey;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 48px;
+    padding: 0 16px 0 16px;
+    font-size: 15px;
 
-    &:last-child {
-      font-size: 15px;
+    .icon {
+      margin: 4px 10px 0 0;
     }
   }
 }
+
+
 
 
 </style>

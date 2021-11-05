@@ -1,15 +1,15 @@
 <template>
   <div class="tags">
     <ul>
-      <li v-for="(item,index) in allTags" :key="index" @click="toggle(item)"
-          :class="{selected: currentTags.indexOf(item)>=0}">
+      <li v-for="item in allTags" :key="item.id" @click="toggle(item.name)"
+          :class="{selected: currentTags.indexOf(item.name)>=0}">
         <!--表示当currentTags.indexOf(item)>=0这个表达式为true时，selected属性添加上去-->
-        <Icon :name="item"/>
-        {{ item }}
+        <Icon :name="item.id"/>
+        {{ item.name }}
       </li>
     </ul>
-    <button @click="addNew">
-      新增标签
+    <button>
+      <router-link to="/labels">新增标签</router-link>
     </button>
   </div>
 </template>
@@ -28,9 +28,14 @@ try {
   console.log(error);
 }
 
+type Tag = {
+  id: string
+  name: string
+}
+
 @Component
 export default class Tags extends Vue {
-  @Prop(Array) allTags: string[] | undefined;
+  @Prop(Array) allTags: Tag[] | undefined;
   currentTags: string[] = [];
 
   @Watch('currentTags')
@@ -47,14 +52,14 @@ export default class Tags extends Vue {
     }
   }
 
-  addNew() {
-    const name = window.prompt('请输入标签名');
-    if (name === '') {
-      window.alert('输入内容不能为空')
-    } else if (this.allTags) {
-      this.$emit('update:allTags', [...this.allTags, name]);
-    }
-  }
+  // addNew() {
+  //   const name = window.prompt('请输入标签名');
+  //   if (name === '') {
+  //     window.alert('输入内容不能为空')
+  //   } else if (this.allTags) {
+  //     this.$emit('update:allTags', [...this.allTags, name]);
+  //   }
+  // }
 }
 </script>
 
@@ -99,7 +104,7 @@ export default class Tags extends Vue {
     line-height: 1;
     padding: 10px;
     margin-top: 20px;
-    color: white;
+    a{color: white;}
   }
 }
 
