@@ -22,13 +22,3 @@ type TagListModel = {
 //定义一个新的类型
 
 
-interface Window{
-    tagList: Tag[]
-    createNewTag: (name: string) => void
-    removeTag: (id: string) => void
-    updateTag: TagListModel['update']
-    recordList: RecordItem[]
-    createRecord: (record: RecordItem) => void
-    saveRecord: () => void
-}
-

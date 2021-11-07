@@ -19,18 +19,19 @@
 import Types from "@/components/Types.vue";
 import Vue from "vue";
 import {Component} from "vue-property-decorator";
+import store from "@/store/index-c";
 
 @Component(
     {components: {Types}}
 )
 export default class Labels extends Vue {
-  tags = window.tagList;
+  tags = store.tagList;
   type = '-';
 
   createNew() {
     const name = window.prompt('请输入你想创建的标签名称');
     if (name) {
-      window.createNewTag(name);
+      store.createNewTag(name);
     }
   }
 }

@@ -17,6 +17,7 @@
 import Vue from 'vue';
 import {Component} from "vue-property-decorator";
 import Notes from "@/components/Notes.vue";
+import store from "@/store/index-c";
 
 @Component({
   components: {Notes}
@@ -29,7 +30,7 @@ export default class EditLabel extends Vue {
     const id = this.$route.params.id;
     //this.$route.params.id就是指向这个组件的路由路径里的:id
     //可以获取到用户访问的url的路径参数
-    const tags = window.tagList;
+    const tags = store.tagList;
     const tag = tags.filter(t => t.id === id)[0]; //filter默认返回一个数组
     if (tag) {
       this.tag = tag;
@@ -40,13 +41,13 @@ export default class EditLabel extends Vue {
 
   onTagChange(name: string) {
     if (this.tag) {
-      window.updateTag(this.tag.id, name);
+      store.updateTag(this.tag.id, name);
     }
   }
 
   deleteTag() {
     if (this.tag) {
-      window.removeTag(this.tag.id);
+      store.removeTag(this.tag.id);
       this.$router.push('/labels');
     }
   }
