@@ -8,6 +8,7 @@ import Notfound from "@/components/Notfound.vue";
 import Layout from "@/components/Layout.vue";
 import Icon from "@/components/Icon.vue";
 import tagListModel from "@/models/tagListModel";
+import recordListModel from "@/models/recordListModel";
 
 
 Vue.config.productionTip = false;
@@ -17,6 +18,8 @@ Vue.component('Notfound', Notfound);
 Vue.component('Layout', Layout);
 Vue.component('Icon', Icon);
 
+
+//封装tagList
 window.tagList = tagListModel.fetch();  //将数据提升到全局
 window.createNewTag = (name: string) => {
     if (name === '') {
@@ -37,6 +40,14 @@ window.removeTag = (id: string)=>{
 window.updateTag = (id,name)=>{
     tagListModel.update(id,name);
 }
+
+//封装recordList
+window.recordList = recordListModel.fetch();  //将数据提升到全局
+window.createRecord = (record)=>{
+    recordListModel.createItem(record)
+}
+
+
 
 
 new Vue({

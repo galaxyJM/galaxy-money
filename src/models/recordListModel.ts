@@ -17,6 +17,7 @@ const recordListModel = {
         //深拷贝 每次record发生改变时创建一个新的record(一个新的地址）
         deepClone.createTime = new Date().toLocaleString();
         this.data.push(deepClone);
+        this.save();
     }
 
 
