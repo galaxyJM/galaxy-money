@@ -20,7 +20,8 @@ module.exports = {
   },
   "globals": {
     "__WebpackModuleApi": true,
-    "RecordItem": true
+    "RecordItem": true,
+    "Tag": true
   },
   overrides: [
     {

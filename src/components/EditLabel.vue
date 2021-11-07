@@ -16,13 +16,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from "vue-property-decorator";
-import tagListModel from "@/models/tagListModel";
 import Notes from "@/components/Notes.vue";
-
-type Tag = {
-  id: string
-  name: string
-}
 
 @Component({
   components: {Notes}
@@ -35,8 +29,7 @@ export default class EditLabel extends Vue {
     const id = this.$route.params.id;
     //this.$route.params.id就是指向这个组件的路由路径里的:id
     //可以获取到用户访问的url的路径参数
-    tagListModel.fetch();
-    const tags = tagListModel.tags;
+    const tags = window.tagList;
     const tag = tags.filter(t => t.id === id)[0]; //filter默认返回一个数组
     if (tag) {
       this.tag = tag;
@@ -44,20 +37,22 @@ export default class EditLabel extends Vue {
       this.$router.replace('/404');  //用replace让用户可以回退
     }
   }
+
   onTagChange(name: string) {
     if (this.tag) {
-      tagListModel.update(this.tag.id, name);
+      window.updateTag(this.tag.id, name);
     }
   }
-  deleteTag(){
+
+  deleteTag() {
     if (this.tag) {
-      tagListModel.delete(this.tag.id);
-      window.alert('删除成功！！')
-      this.$router.push('/labels')
+      window.removeTag(this.tag.id);
+      this.$router.push('/labels');
     }
   }
-  goback(){
-    this.$router.push('/labels')
+
+  goback() {
+    this.$router.push('/labels');
   }
 }
 </script>

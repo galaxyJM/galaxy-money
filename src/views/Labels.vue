@@ -19,29 +19,22 @@
 import Types from "@/components/Types.vue";
 import Vue from "vue";
 import {Component} from "vue-property-decorator";
-import tagListModel from "@/models/tagListModel.ts";
-
 
 @Component(
     {components: {Types}}
 )
 export default class Labels extends Vue {
-  tags = tagListModel.fetch();
+  tags = window.tagList;
   type = '-';
+
   createNew() {
     const name = window.prompt('请输入你想创建的标签名称');
-    if (name === '') {
-      window.alert('输入的标签值不能为空');
-    } else if (name) {
-      const error = tagListModel.create(name);
-      if (error === 'duplicated') {
-        window.alert('标签名已存在，请更改标签名');
-      } else if (error === 'success') {
-        window.alert('添加成功');
-      }
+    if (name) {
+      window.createNewTag(name);
     }
   }
 }
+
 </script>
 
 <style lang="scss" scoped>
@@ -64,6 +57,7 @@ export default class Labels extends Vue {
       margin: 4px 10px 0 0;
     }
   }
+
   div {
     border-bottom: 1px solid dimgrey;
     display: flex;
@@ -78,8 +72,6 @@ export default class Labels extends Vue {
     }
   }
 }
-
-
 
 
 </style>
