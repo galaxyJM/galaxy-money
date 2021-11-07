@@ -1,10 +1,10 @@
 <template>
   <Layout>
     <div class="titleBox">
-      <Icon name="left" @click="goback"/>
+      <Icon name="left" @click="goBack"/>
       <div class="title">编辑标签</div>
     </div>
-    <Notes :value="tag.name" @update:notes="onTagChange" edit-name="标签名" placeholder="请输入标签名"/>
+    <Notes :value="wantEditTag.name" @update:notes="onTagChange" edit-name="标签名" placeholder="请输入标签名"/>
     <div class="container">
       <button @click="deleteTag">
         删除标签
@@ -17,42 +17,46 @@
 import Vue from 'vue';
 import {Component} from "vue-property-decorator";
 import Notes from "@/components/Notes.vue";
-import store from "@/store/index-c";
+
 
 @Component({
   components: {Notes}
 })
 export default class EditLabel extends Vue {
-  tag?: Tag = undefined;
+  //vue原生自带的ts支持中计算属性的写法
+  get wantEditTag() {
+    return this.$store.state.wantEditTag;
+  }
 
   //生命周期
   created() {
     const id = this.$route.params.id;
     //this.$route.params.id就是指向这个组件的路由路径里的:id
     //可以获取到用户访问的url的路径参数
-    const tags = store.tagList;
-    const tag = tags.filter(t => t.id === id)[0]; //filter默认返回一个数组
-    if (tag) {
-      this.tag = tag;
-    } else {
+    this.$store.commit('fetchTag');
+    //如果直接进入这个页面，由于此时页面中的tagList并不存在
+    //所以相应的wantEditTag也不存在，会直接进入404页面，故应该先fetch一下
+    this.$store.commit('findWantEditTag', id);
+    if (!this.wantEditTag) {
       this.$router.replace('/404');  //用replace让用户可以回退
     }
   }
 
-  onTagChange(name: string) {
-    if (this.tag) {
-      store.updateTag(this.tag.id, name);
+  onTagChange(name:string) {
+    if (this.wantEditTag) {
+      const editContent = {'id':this.wantEditTag.id,'name':name}
+      this.$store.commit('updateTag', editContent);
     }
   }
 
   deleteTag() {
-    if (this.tag) {
-      store.removeTag(this.tag.id);
+    if (this.wantEditTag) {
+      this.$store.commit('removeTag', this.wantEditTag.id);
       this.$router.push('/labels');
     }
   }
 
-  goback() {
+  goBack() {
     this.$router.push('/labels');
   }
 }
