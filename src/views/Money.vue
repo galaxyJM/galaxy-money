@@ -15,14 +15,22 @@ import Notes from "@/components/Notes.vue";
 import Tags from "@/components/Tags.vue";
 import Vue from "vue";
 import {Component} from "vue-property-decorator";
-import store from "@/store/index-c";
 
 @Component(
-    {components: {Tags, Notes, NumberPad, Types}}
+    {
+      components: {Tags, Notes, NumberPad, Types},
+      computed: {
+        recordList() {
+          return this.$store.state.recordList;
+        },
+        allTags() {
+          return this.$store.state.tagList;
+        }
+      }
+    }
 )
 export default class Money extends Vue {
-  allTags = store.tagList;
-  recordList = store.recordList;
+
   record: RecordItem = {
     type: '-',
     currentTag: [],
@@ -30,6 +38,12 @@ export default class Money extends Vue {
     number: 0,
     createTime: ''
   };
+
+  //生命周期
+  created() {
+    this.$store.commit('fetchRecordList');
+    this.$store.commit('fetchTag');
+  }
 
   onTagsChange(currentTag: string[]) {
     this.record.currentTag = currentTag;
@@ -44,7 +58,7 @@ export default class Money extends Vue {
   }
 
   saveToDb() {
-    store.createRecord(this.record);
+    this.$store.commit('createRecordItem', this.record);
   }
 }
 </script>
