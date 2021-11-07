@@ -45,15 +45,12 @@ export default class Money extends Vue {
   }
 
   saveToDb() {
-    const deepClone: RecordItem = recordListModel.clone(this.record);
-    //深拷贝 每次record发生改变时创建一个新的record(一个新的地址）
-    deepClone.createTime = new Date().toLocaleString();
-    this.recordList.push(deepClone);
+    recordListModel.createItem(this.record)
   }
 
   @Watch('recordList')
-  onRecordChange(recordList: RecordItem[]) {
-    recordListModel.save(recordList)
+  onRecordChange() {
+    recordListModel.save()
   }
 }
 </script>
