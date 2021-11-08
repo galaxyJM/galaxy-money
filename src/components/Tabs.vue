@@ -1,7 +1,7 @@
 <template>
-  <div class="tabs">
-    <ul>
-      <li :class="{selected: item.value === value}"
+  <div>
+    <ul class="tabs">
+      <li class="tabs-item" :class="{selected: item.value === value,[classPrefix + '-tabs-item']: classPrefix}"
           v-for="item in dataSource"
           :key="item.value"
           @click="changeValue(item.value)">{{item.text}}</li>
@@ -33,19 +33,19 @@ export default class Tabs extends Vue {
 <style lang="scss" scoped>
 @import "../assets/style/reset.scss";
 .tabs {
-  ul {
     display: flex;
-    padding: 10px 0 10px 0;
     justify-content: center;
     align-items: center;
     background: #c4c4c4;
-
-    li {
+    //通过一级选择器降低优先级 方便外面进行控制
+    &-item {
       width: 50%;
-      line-height: 64px;
+      height: 64px;
       font-size: 24px;
       position: relative;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       &.selected::after {
         content: '';
@@ -57,6 +57,6 @@ export default class Tabs extends Vue {
         position: absolute;
       }
     }
-  }
+
 }
 </style>

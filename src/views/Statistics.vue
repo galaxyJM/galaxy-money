@@ -1,7 +1,7 @@
 <template>
   <Layout>
-    <Tabs :data-source="recordTypeList" :value.sync="recordType"/>
-    <Tabs :data-source="timeIntervalList" :value.sync="timeInterval"/>
+    <Tabs :data-source="recordTypeList" :value.sync="recordType" class-prefix="type"/>
+    <Tabs :data-source="timeIntervalList" :value.sync="timeInterval" class-prefix="timeInterval"/>
   </Layout>
 </template>
 
@@ -26,5 +26,23 @@ export default class Statistics extends Vue {
 </script>
 
 <style lang="scss" scoped>
-
+::v-deep .timeInterval-tabs-item {
+  height: 50px;
+  font-size: 16px;
+  border-top: 1px solid #bbbbbb;
+  &.selected::after {
+    content: '';
+    background: black;
+    height: 2px;
+    bottom: 10px;
+    left: 25%;
+    width: 50%;
+  }
+}
+::v-deep .type-tabs-item {
+  &.selected{
+    background: white;
+  }
+  &.selected::after {content: none;}
+}
 </style>
