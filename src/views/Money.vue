@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <Types :value.sync="record.type"/>
+    <Tabs :data-source="recordTypeList" :value.sync="recordType"/>
     <Tags :all-tags.sync="allTags" @update:tags="onTagsChange"/>
     <Notes edit-name="备注：" placeholder="请输入你想说的话" @update:notes="onNotesChange"/>
     <NumberPad @update:number="onNumberChange" @saveToDb="saveToDb"/>
@@ -9,16 +9,17 @@
 </template>
 
 <script lang="ts">
-import Types from "@/components/Types.vue";
 import NumberPad from "@/components/NumberPad.vue";
 import Notes from "@/components/Notes.vue";
 import Tags from "@/components/Tags.vue";
 import Vue from "vue";
 import {Component} from "vue-property-decorator";
+import recordTypeList from "@/constants/recordTypeList";
+import Tabs from "@/components/Tabs.vue";
 
 @Component(
     {
-      components: {Tags, Notes, NumberPad, Types},
+      components: {Tags, Notes, NumberPad, Tabs},
       computed: {
         recordList() {
           return this.$store.state.recordList;
@@ -30,6 +31,9 @@ import {Component} from "vue-property-decorator";
     }
 )
 export default class Money extends Vue {
+
+  recordType = '-';
+  recordTypeList = recordTypeList;
 
   record: RecordItem = {
     type: '-',

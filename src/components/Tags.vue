@@ -19,15 +19,6 @@
 import Vue from "vue";
 import {Component, Prop, Watch} from "vue-property-decorator";
 
-let importAll = (requireContext: __WebpackModuleApi.RequireContext) => {
-  requireContext.keys().forEach(requireContext);
-}
-try {
-  importAll(require.context('../assets/icons', true, /\.svg$/));
-} catch (error) {
-  console.log(error);
-}
-
 type Tag = {
   id: string
   name: string

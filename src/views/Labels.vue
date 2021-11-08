@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <Types :value.sync="type"/>
+    <Tabs :data-source="recordTypeList" :value.sync="recordType"/>
     <div class="tagsList">
       <router-link class="tag" :to="`/labels/edit/${tag.id}`" v-for="tag in tags" :key="tag.id">
         <span><Icon :name='tag.name'/>{{ tag.name }}</span>
@@ -16,13 +16,14 @@
 </template>
 
 <script lang="ts">
-import Types from "@/components/Types.vue";
+import Tabs from "@/components/Tabs.vue";
+import recordTypeList from "@/constants/recordTypeList";
 import Vue from "vue";
 import {Component} from "vue-property-decorator";
 
 @Component(
     {
-      components: {Types},
+      components: {Tabs},
       computed: {
         tags() {
           return this.$store.state.tagList;
@@ -31,7 +32,8 @@ import {Component} from "vue-property-decorator";
     }
 )
 export default class Labels extends Vue {
-  type = '-';
+  recordType = '-';
+  recordTypeList = recordTypeList;
 
   //生命周期
   created() {
