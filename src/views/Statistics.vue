@@ -2,6 +2,13 @@
   <Layout>
     <Tabs :data-source="recordTypeList" :value.sync="recordType" class-prefix="type"/>
     <Tabs :data-source="timeIntervalList" :value.sync="timeInterval" class-prefix="timeInterval"/>
+    <div class="list">
+      <ol>
+        <li v-for="record in recordList" :key="record">
+          {{record}}
+        </li>
+      </ol>
+    </div>
   </Layout>
 </template>
 
@@ -17,6 +24,15 @@ import timeIntervalList from "@/constants/timeIntervalList";
   components: {Tabs}
 })
 export default class Statistics extends Vue {
+
+  get recordList(){
+    return (this.$store.state as RootState).recordList
+  }
+
+
+  created(){
+    this.$store.commit('fetchRecordList')
+  }
   recordType = '-';
   recordTypeList = recordTypeList;
   timeInterval = 'month';

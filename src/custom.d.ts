@@ -18,6 +18,12 @@ type TagListModel = {
     update: (id: string, name: string) => void
     delete: (id: string) => void
 }
+
+type RootState = {
+    recordList: RecordItem[]
+    tagList: Tag[]
+    wantEditTag?: Tag
+}
 //全局类型定义
 //定义一个新的类型
 

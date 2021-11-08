@@ -5,12 +5,6 @@ import createID from "@/lib/createID";
 
 Vue.use(Vuex);
 
-type RootState = {
-    recordList: RecordItem[]
-    tagList: Tag[]
-    wantEditTag?: Tag
-}
-
 const store = new Vuex.Store({
     state: {
         recordList: [],
@@ -24,7 +18,7 @@ const store = new Vuex.Store({
         createRecordItem(state, record) {
             const deepClone: RecordItem = clone(record);
             //深拷贝 每次record发生改变时创建一个新的record(一个新的地址）
-            deepClone.createTime = new Date().toLocaleString();
+            deepClone.createTime = new Date().toISOString();
             state.recordList.push(deepClone);
             store.commit('saveRecordItem');
         },

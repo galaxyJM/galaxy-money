@@ -52,6 +52,7 @@ export default class EditLabel extends Vue {
   deleteTag() {
     if (this.wantEditTag) {
       this.$store.commit('removeTag', this.wantEditTag.id);
+      window.alert('删除成功!');
       this.$router.push('/labels');
     }
   }
