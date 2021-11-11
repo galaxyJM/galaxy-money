@@ -5,7 +5,7 @@
     <div class="list">
       <h3></h3>
       <ol>
-        <li v-for="(group,index) in result" :key="index">
+        <li v-for="(group,index) in groupedList" :key="index">
           <h3 class="title">{{ beautify(group.title) }}</h3>
           <ol>
             <li v-for="item in group.items" :key="item.number" class="recordList">
@@ -27,6 +27,7 @@ import Tabs from "@/components/Tabs.vue";
 import recordTypeList from "@/constants/recordTypeList";
 import timeIntervalList from "@/constants/timeIntervalList";
 import dayjs from "dayjs";
+import clone from "@/lib/clone";
 
 @Component({
   components: {Tabs}
@@ -37,17 +38,24 @@ export default class Statistics extends Vue {
     return (this.$store.state as RootState).recordList;
   }
 
-  get result() {
+  get groupedList() {
     const {recordList} = this;
-    type Items = RecordItem[];
-    type hashTableValue = { title: string, items: Items }
-    const hashTable: { [key: string]: hashTableValue } = {};
-    for (let i = 0; i < recordList.length; i++) {
-      const [data] = recordList[i].createTime.split('T');
-      hashTable[data] = hashTable[data] || {title: data, items: []};
-      hashTable[data].items.push(recordList[i]);
+    if(recordList.length === 0){return [];}
+    //因为对象是无序的 所以为了排序hash应该是一个数组
+    //用两个数相减来比较大小
+    //sort这个api会直接在原数组上进行更改，所以要进行一个深拷贝！
+    const newList = clone(recordList).sort((a,b) => dayjs(a.createTime).valueOf()-dayjs(b.createTime).valueOf())
+    const result = [{title: dayjs(newList[0].createTime).format('YYYY-MM-DD'),items: [newList[0]]}]
+    for(let i=1;i<newList.length;i++){
+      const lastTime = result[result.length - 1]
+      const now = newList[i]
+      if(dayjs(now.createTime).isSame(lastTime.title,'day')){
+        lastTime.items.push(now)
+      }else{
+        result.push({title: dayjs(now.createTime).format('YYYY-MM-DD'),items: [now]})
+      }
     }
-    return hashTable;
+    return result;
   }
 
   tagString(tags: string[]) {
