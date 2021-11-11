@@ -6,7 +6,7 @@
       <h3></h3>
       <ol>
         <li v-for="(group,index) in result" :key="index">
-          <h3 class="title">{{ group.title }}</h3>
+          <h3 class="title">{{ beautify(group.title) }}</h3>
           <ol>
             <li v-for="item in group.items" :key="item.number" class="recordList">
               <span>{{ tagString(item.currentTag) }}</span>
@@ -26,7 +26,7 @@ import {Component} from "vue-property-decorator";
 import Tabs from "@/components/Tabs.vue";
 import recordTypeList from "@/constants/recordTypeList";
 import timeIntervalList from "@/constants/timeIntervalList";
-
+import dayjs from "dayjs";
 
 @Component({
   components: {Tabs}
@@ -52,6 +52,22 @@ export default class Statistics extends Vue {
 
   tagString(tags: string[]) {
     return tags.length === 0 ? '无' : tags.join(',');
+  }
+
+  beautify(string: string) {
+    const now = dayjs();
+    const time = dayjs(string);
+    if (time.isSame(now, 'day')) {
+      return '今天';
+    } else if (time.isSame(now.subtract(1, 'day'), 'day')) {
+      return '昨天';
+    } else if (time.isSame(now.subtract(2, 'day'), 'day')) {
+      return '前天';
+    } else if (time.isSame(now, 'year')) {
+      return time.format('M月D日');
+    } else {
+      return time.format('YYYY年M月D日');
+    }
   }
 
   created() {
