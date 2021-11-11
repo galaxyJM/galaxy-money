@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <Tabs :data-source="recordTypeList" :value.sync="recordType"/>
+    <Tabs :data-source="recordTypeList" :value.sync="recordType" @update:recordType="onRecordTypeChange"/>
     <Tags :all-tags.sync="allTags" @update:tags="onTagsChange"/>
     <Notes edit-name="备注：" placeholder="请输入你想说的话" @update:notes="onNotesChange"/>
     <NumberPad @update:number="onNumberChange" @saveToDb="saveToDb"/>
@@ -47,6 +47,10 @@ export default class Money extends Vue {
   created() {
     this.$store.commit('fetchRecordList');
     this.$store.commit('fetchTag');
+  }
+
+  onRecordTypeChange(recoedType: string) {
+    this.record.type = recoedType;
   }
 
   onTagsChange(currentTag: string[]) {

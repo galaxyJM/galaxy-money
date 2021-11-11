@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import {Component, Prop} from "vue-property-decorator";
+import {Component, Prop, Watch} from "vue-property-decorator";
 
 type dataSourceItem = {
   text: string
@@ -25,6 +25,10 @@ export default class Tabs extends Vue {
   @Prop({required: true, type: Array}) dataSource!: dataSourceItem[];
   changeValue(value: string) {
     this.$emit('update:value', value);
+  }
+  @Watch('value')
+  onCurrentTagsChange(value: string) {
+    this.$emit('update:recordType', value);
   }
 
 }

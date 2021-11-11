@@ -1,7 +1,6 @@
 <template>
   <Layout>
     <Tabs :data-source="recordTypeList" :value.sync="recordType" class-prefix="type"/>
-    <Tabs :data-source="timeIntervalList" :value.sync="timeInterval" class-prefix="timeInterval"/>
     <div class="list">
       <h3></h3>
       <ol>
@@ -25,7 +24,6 @@ import Vue from "vue";
 import {Component} from "vue-property-decorator";
 import Tabs from "@/components/Tabs.vue";
 import recordTypeList from "@/constants/recordTypeList";
-import timeIntervalList from "@/constants/timeIntervalList";
 import dayjs from "dayjs";
 import clone from "@/lib/clone";
 
@@ -44,7 +42,9 @@ export default class Statistics extends Vue {
     //因为对象是无序的 所以为了排序hash应该是一个数组
     //用两个数相减来比较大小
     //sort这个api会直接在原数组上进行更改，所以要进行一个深拷贝！
-    const newList = clone(recordList).sort((a,b) => dayjs(a.createTime).valueOf()-dayjs(b.createTime).valueOf())
+    const newList = clone(recordList)
+        .filter(r => r.type === this.recordType)
+        .sort((a,b) => dayjs(a.createTime).valueOf()-dayjs(b.createTime).valueOf())
     const result = [{title: dayjs(newList[0].createTime).format('YYYY-MM-DD'),items: [newList[0]]}]
     for(let i=1;i<newList.length;i++){
       const lastTime = result[result.length - 1]
@@ -84,8 +84,6 @@ export default class Statistics extends Vue {
 
   recordType = '-';
   recordTypeList = recordTypeList;
-  timeInterval = 'month';
-  timeIntervalList = timeIntervalList;
 }
 
 </script>
