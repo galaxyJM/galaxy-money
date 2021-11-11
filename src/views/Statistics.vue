@@ -5,9 +5,9 @@
       <h3></h3>
       <ol>
         <li v-for="(group,index) in groupedList" :key="index">
-          <h3 class="title">{{ beautify(group.title) }}</h3>
+          <h3 class="title">{{ beautify(group.title) }}<span>￥{{group.total}}</span></h3>
           <ol>
-            <li v-for="item in group.items" :key="item.number" class="recordList">
+            <li v-for="item in group.items" :key="item.id" class="recordList">
               <span>{{ tagString(item.currentTag) }}</span>
               <span class="notes">{{ item.notes }}</span>
               <span>￥{{ item.number }}</span>
@@ -45,7 +45,8 @@ export default class Statistics extends Vue {
     const newList = clone(recordList)
         .filter(r => r.type === this.recordType)
         .sort((a,b) => dayjs(a.createTime).valueOf()-dayjs(b.createTime).valueOf())
-    const result = [{title: dayjs(newList[0].createTime).format('YYYY-MM-DD'),items: [newList[0]]}]
+    type Result = {title: string,total?: number,items: RecordItem[]}[]
+    const result: Result = [{title: dayjs(newList[0].createTime).format('YYYY-MM-DD'),items: [newList[0]]}]
     for(let i=1;i<newList.length;i++){
       const lastTime = result[result.length - 1]
       const now = newList[i]
@@ -55,6 +56,9 @@ export default class Statistics extends Vue {
         result.push({title: dayjs(now.createTime).format('YYYY-MM-DD'),items: [now]})
       }
     }
+    result.map(res =>
+       res.total = res.items.reduce((sum,item)=>{
+          return sum + item.number},0))
     return result;
   }
 

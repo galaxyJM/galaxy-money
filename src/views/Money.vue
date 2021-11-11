@@ -49,8 +49,8 @@ export default class Money extends Vue {
     this.$store.commit('fetchTag');
   }
 
-  onRecordTypeChange(recoedType: string) {
-    this.record.type = recoedType;
+  onRecordTypeChange(recordType: string) {
+    this.record.type = recordType;
   }
 
   onTagsChange(currentTag: string[]) {
