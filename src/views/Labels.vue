@@ -27,27 +27,19 @@ import Button from "@/components/Button.vue";
 @Component(
     {
       components: {Button, Tabs},
-      computed: {
-        tags() {
-          return this.$store.state.tagList;
-        }
-      }
     }
 )
 export default class Labels extends Vue {
   recordType = '-';
   recordTypeList = recordTypeList;
 
+  get tags() {
+    return this.$store.state.tagList;
+  }
+
   //生命周期
   created() {
     this.$store.commit('fetchTag');
-  }
-
-  addNewTag() {
-    const name = window.prompt('请输入你想创建的标签名称');
-    if (name) {
-      this.$store.commit('createTag', name);
-    }
   }
 }
 

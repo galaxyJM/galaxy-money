@@ -62,8 +62,12 @@ const store = new Vuex.Store({
                     state.tagList[i].name = tag.name;
                     state.tagList[i].iconName = tag.iconName;
                     store.commit('saveTag');
+                }else if(state.tagList[i].name === tag.name) {
+                    window.alert('标签名已存在，请重新编辑！');
+                    return;
                 }
             }
+            window.alert('编辑成功！');
         },
         removeTag(state, id: string) {
             for (let i = 0; i < state.tagList.length; i++) {

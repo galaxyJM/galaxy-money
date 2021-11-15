@@ -51,6 +51,7 @@ export default class EditLabel extends Vue {
     '衣', '食', '住', '行'];
   myInTags = ['中奖', '商业', '股票', '房租', '工资'];
   currentTag = '';
+  currentName = '';
 
   //vue原生自带的ts支持中计算属性的写法
   get wantEditTag() {
@@ -74,10 +75,11 @@ export default class EditLabel extends Vue {
       this.$router.replace('/404');  //用replace让用户可以回退
     }
     this.currentTag = this.wantEditTag.iconName;
+    this.currentName = this.wantEditTag.name;
   }
 
   onTagChange(name: string) {
-    this.wantEditTag.name = name;
+    this.currentName = name;
   }
 
   deleteTag() {
@@ -89,9 +91,8 @@ export default class EditLabel extends Vue {
   }
   changeIconName(){
     if (this.wantEditTag) {
-      const editContent = {'id': this.wantEditTag.id, 'name': this.wantEditTag.name,'iconName': this.currentTag};
+      const editContent = {'id': this.wantEditTag.id, 'name': this.currentName,'iconName': this.currentTag};
       this.$store.commit('updateTag', editContent);
-      window.alert('编辑成功！')
       this.goBack();
     }
   }
