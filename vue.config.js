@@ -2,6 +2,7 @@ const path = require('path')  //引入nodejs的path模块来处理目录
 
 module.exports = {
   lintOnSave: false,
+  publicPath: '/galaxyMoney/',
   chainWebpack: config =>{
     const dir = path.resolve(__dirname,'src/assets/icons')  //找到要引入的svg的目录
 
