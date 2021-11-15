@@ -91,6 +91,7 @@ export default class EditLabel extends Vue {
     if (this.wantEditTag) {
       const editContent = {'id': this.wantEditTag.id, 'name': this.wantEditTag.name,'iconName': this.currentTag};
       this.$store.commit('updateTag', editContent);
+      window.alert('编辑成功！')
       this.goBack();
     }
   }

@@ -30,6 +30,7 @@ export default class addNewLabel extends Vue {
     this.tagListRecord.iconName = iconName;
     this.tagListRecord.type = this.recordType;
     this.$store.commit('createTag', this.tagListRecord);
+    this.$router.push('/labels');
   }
 }
 </script>

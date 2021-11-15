@@ -3,8 +3,10 @@
     <Tabs :data-source="recordTypeList" :value.sync="recordType"/>
     <div class="tagsList">
       <router-link class="tag" :to="`/labels/edit/${tag.id}`" v-for="tag in tags" :key="tag.id">
-        <span><Icon :name='tag.iconName'/>{{ tag.name }}</span>
-        <Icon name='arrow'/>
+        <div v-if="tag.type === recordType" class="icon-wrapper">
+          <span><Icon :name='tag.iconName'/>{{ tag.name }}</span>
+          <Icon name='arrow'/>
+        </div>
       </router-link>
     </div>
     <div class="addButton">
@@ -59,34 +61,23 @@ export default class Labels extends Vue {
   flex-direction: column;
 
   .tag {
-    border-bottom: 1px solid dimgrey;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 48px;
-    padding: 0 16px 0 16px;
-    font-size: 20px;
+    .icon-wrapper {
+      border-bottom: 1px solid dimgrey;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 48px;
+      padding: 0 16px 0 16px;
+      font-size: 20px;
 
-    .icon {
-      margin: 4px 10px 0 0;
-    }
-  }
-
-  div {
-    border-bottom: 1px solid dimgrey;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 48px;
-    padding: 0 16px 0 16px;
-    font-size: 15px;
-
-    .icon {
-      margin: 4px 10px 0 0;
+      .icon {
+        margin: 4px 10px 0 0;
+      }
     }
   }
 }
-.addButton{
+
+.addButton {
   text-align: center;
 }
 
