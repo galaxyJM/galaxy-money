@@ -1,8 +1,8 @@
 <template>
   <Layout>
     <Tabs :data-source="recordTypeList" :value.sync="recordType" class-prefix="type"/>
+    <h1 v-if="groupedList.length === 0">目前暂无数据，快去记一笔帐吧！</h1>
     <div class="list">
-      <h3></h3>
       <ol>
         <li v-for="(group,index) in groupedList" :key="index">
           <h3 class="title">{{ beautify(group.title) }}<span>￥{{group.total}}</span></h3>
@@ -45,6 +45,9 @@ export default class Statistics extends Vue {
     const newList = clone(recordList)
         .filter(r => r.type === this.recordType)
         .sort((a,b) => dayjs(a.createTime).valueOf()-dayjs(b.createTime).valueOf())
+    if(newList.length === 0){
+      return [];
+    }
     type Result = {title: string,total?: number,items: RecordItem[]}[]
     const result: Result = [{title: dayjs(newList[0].createTime).format('YYYY-MM-DD'),items: [newList[0]]}]
     for(let i=1;i<newList.length;i++){
@@ -93,6 +96,11 @@ export default class Statistics extends Vue {
 </script>
 
 <style lang="scss" scoped>
+h1{
+  text-align: center;
+  margin-top: 50%;
+}
+
 ::v-deep .timeInterval-tabs-item {
   height: 50px;
   font-size: 16px;

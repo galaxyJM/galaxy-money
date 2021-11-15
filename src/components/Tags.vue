@@ -1,7 +1,7 @@
 <template>
   <div class="tags">
     <ul>
-      <li v-for="item in allTags" :key="item.id" @click="toggle(item.name)"
+      <li v-for="item in typeTag" :key="item.id" @click="toggle(item.name)"
           :class="{selected: currentTags.indexOf(item.name)>=0}">
         <!--表示当currentTags.indexOf(item)>=0这个表达式为true时，selected属性添加上去-->
         <Icon :name="item.iconName"/>
@@ -25,7 +25,16 @@ import Button from "@/components/Button.vue";
 })
 export default class Tags extends Vue {
   @Prop(Array) allTags: Tag[] | undefined;
+  @Prop({required: true}) tagType!: string;
   currentTags: string[] = [];
+
+  get typeTag() {
+    if (this.allTags) {
+      return this.allTags.filter(r => r.type === this.tagType);
+    }
+    return [];
+  }
+
 
   @Watch('currentTags')
   onCurrentTagsChange(currentTags: string) {

@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <Tabs :data-source="recordTypeList" :value.sync="recordType" @update:recordType="onRecordTypeChange"/>
-    <Tags :all-tags.sync="allTags" @update:tags="onTagsChange"/>
+    <Tags :all-tags.sync="allTags" @update:tags="onTagsChange" :tag-type="recordType"/>
     <Notes edit-name="备注：" placeholder="请输入你想说的话" @update:notes="onNotesChange"/>
     <NumberPad @update:number="onNumberChange" @saveToDb="saveToDb"/>
   </Layout>
