@@ -28,18 +28,22 @@ const store = new Vuex.Store({
         fetchTag(state) {
             state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
         },
-        createTag(state, name) {
-            if (name === '') {
+        createTag(state, tag: { name: string, iconName: string, type: string }) {
+            if (tag.name === '') {
                 window.alert('输入的标签值不能为空');
+                return;
             }
             const names = state.tagList.map(item => item.name);
-            if (names.indexOf(name) >= 0) {
+            if (names.indexOf(tag.name) >= 0) {
                 window.alert('标签名已存在，请更改标签名');
                 return 'duplicated';
                 //返回错误信息
             }
             const id = createID().toString();
-            state.tagList.push({id: id, name: name,iconName: name});
+            state.tagList.push({
+                id: id, name: tag.name,
+                iconName: tag.iconName, type: tag.type
+            });
             store.commit('saveTag');
             window.alert('添加成功');
             return 'success';
@@ -52,11 +56,11 @@ const store = new Vuex.Store({
             state.wantEditTag = state.tagList.filter(t => t.id === id)[0];
         },
         //mutations只能传入两个参数 所以第二个参数只能为一个对象
-        updateTag(state, tag: { id: string, name: string }) {
+        updateTag(state, tag: { id: string, name: string, iconName: string }) {
             for (let i = 0; i < state.tagList.length; i++) {
                 if (state.tagList[i].id === tag.id) {
-                    console.log(tag.name);
                     state.tagList[i].name = tag.name;
+                    state.tagList[i].iconName = tag.iconName;
                     store.commit('saveTag');
                 }
             }

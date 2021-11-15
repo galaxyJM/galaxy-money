@@ -5,9 +5,31 @@
       <div class="title">编辑标签</div>
     </div>
     <Notes :value="wantEditTag.name" @update:notes="onTagChange" edit-name="标签名" placeholder="请输入标签名"/>
+    <div class="tagSvg">
+      <div class="title">图标选择:</div>
+      <ul v-if="wantEditTag.type === '-'">
+        <li @click="selectMe(item)"
+            v-for="item in myOutTags"
+            :key="item.id"
+            :class="{selected: currentTag === item}">
+          <Icon :name="item"/>
+        </li>
+      </ul>
+      <ul v-else>
+        <li @click="selectMe(item)"
+            v-for="item in myInTags"
+            :key="item.id"
+            :class="{selected: currentTag === item}">
+          <Icon :name="item"/>
+        </li>
+      </ul>
+    </div>
     <div class="container">
       <button @click="deleteTag">
         删除标签
+      </button>
+      <button @click="changeIconName">
+        完成编辑
       </button>
     </div>
   </Layout>
@@ -17,16 +39,28 @@
 import Vue from 'vue';
 import {Component} from "vue-property-decorator";
 import Notes from "@/components/Notes.vue";
+import TagList from "@/components/TagList.vue";
 
 
 @Component({
-  components: {Notes}
+  components: {TagList, Notes}
 })
 export default class EditLabel extends Vue {
+  myOutTags = ['出租车', '医疗', '口红', '手机',
+    '教育', '水果', '电影', '鞋子',
+    '衣', '食', '住', '行'];
+  myInTags = ['中奖', '商业', '股票', '房租', '工资'];
+  currentTag = '';
+
   //vue原生自带的ts支持中计算属性的写法
   get wantEditTag() {
     return this.$store.state.wantEditTag;
   }
+
+  selectMe(iconName: string) {
+    this.currentTag = iconName;
+  }
+
   //生命周期
   created() {
     const id = this.$route.params.id;
@@ -39,13 +73,11 @@ export default class EditLabel extends Vue {
     if (!this.wantEditTag) {
       this.$router.replace('/404');  //用replace让用户可以回退
     }
+    this.currentTag = this.wantEditTag.iconName;
   }
 
   onTagChange(name: string) {
-    if (this.wantEditTag) {
-      const editContent = {'id': this.wantEditTag.id, 'name': name};
-      this.$store.commit('updateTag', editContent);
-    }
+    this.wantEditTag.name = name;
   }
 
   deleteTag() {
@@ -55,7 +87,13 @@ export default class EditLabel extends Vue {
       this.$router.push('/labels');
     }
   }
-
+  changeIconName(){
+    if (this.wantEditTag) {
+      const editContent = {'id': this.wantEditTag.id, 'name': this.wantEditTag.name,'iconName': this.currentTag};
+      this.$store.commit('updateTag', editContent);
+      this.goBack();
+    }
+  }
   goBack() {
     this.$router.push('/labels');
   }
@@ -81,9 +119,12 @@ export default class EditLabel extends Vue {
 .tagSvg {
   display: flex;
   flex-direction: column;
-  align-items: center;
   height: 50vh;
-
+  .title{
+    color: #666;
+    margin-left: 12px;
+    margin-top: 12px;
+  }
   ul {
     display: flex;
     flex-wrap: wrap;
@@ -111,7 +152,8 @@ export default class EditLabel extends Vue {
 
 
 .container {
-  text-align: center;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 button {

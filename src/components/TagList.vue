@@ -2,29 +2,46 @@
   <div class="tagSvg">
     <div class="title">图标选择:</div>
     <ul v-if="tagType === '-'">
-      <li v-for="item in myOutTags" :key="item.id">
+      <li @click="selectMe(item)" v-for="item in myOutTags"
+          :key="item.id"
+          :class="{selected: currentTag === item}">
         <Icon :name="item"/>
       </li>
     </ul>
     <ul v-else>
-      <li v-for="item in myInTags" :key="item.id">
+      <li @click="selectMe(item)" v-for="item in myInTags"
+          :key="item.id"
+          :class="{selected: currentTag === item}">
         <Icon :name="item"/>
       </li>
     </ul>
+    <Button @click.native="addNewTag" button-name="完成"/>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import Button from "@/components/Button.vue";
 import {Component, Prop} from "vue-property-decorator";
+import Notes from "@/components/Notes.vue";
+import Tabs from "@/components/Tabs.vue";
 
-@Component({})
+@Component({components: {Button, TagList, Notes, Tabs}})
 export default class TagList extends Vue {
   myOutTags = ['出租车', '医疗', '口红', '手机',
     '教育', '水果', '电影', '鞋子',
     '衣', '食', '住', '行'];
   myInTags = ['中奖', '商业', '股票', '房租', '工资'];
   @Prop({required: true}) tagType!: string;
+  currentTag = '';
+
+  addNewTag() {
+    this.$emit('transTag', this.currentTag);
+  }
+
+  selectMe(iconName: string) {
+    this.currentTag = iconName;
+  }
 }
 </script>
 

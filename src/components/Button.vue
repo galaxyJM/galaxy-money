@@ -1,5 +1,7 @@
 <template>
-  <button>{{ buttonName }}</button>
+  <div class="button-wrapper">
+    <button>{{ buttonName }}</button>
+  </div>
 </template>
 
 <script lang="ts">
@@ -13,6 +15,9 @@ export default class Button extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.button-wrapper{
+  text-align: center;
+}
 button {
   outline: none;
   border-style: none;

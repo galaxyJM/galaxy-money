@@ -4,7 +4,7 @@
       <li v-for="item in allTags" :key="item.id" @click="toggle(item.name)"
           :class="{selected: currentTags.indexOf(item.name)>=0}">
         <!--表示当currentTags.indexOf(item)>=0这个表达式为true时，selected属性添加上去-->
-        <Icon :name="item.name"/>
+        <Icon :name="item.iconName"/>
         {{ item.name }}
       </li>
     </ul>

@@ -1,10 +1,8 @@
 <template>
   <Layout>
     <Tabs :data-source="recordTypeList" :value.sync="recordType"/>
-    <Notes edit-name="请输入标签名："/>
-    <TagList :tag-type="recordType"/>
-    <button>
-    </button>
+    <Notes edit-name="请输入标签名：" @update:notes="onNotesChange"/>
+    <TagList :tag-type="recordType" @transTag="onIconChange"/>
   </Layout>
 </template>
 
@@ -22,11 +20,22 @@ import TagList from "@/components/TagList.vue";
 export default class addNewLabel extends Vue {
   recordType = '-';
   recordTypeList = recordTypeList;
+  tagListRecord = {name: '', iconName: '', type: ''};
+
+  onNotesChange(notes: string) {
+    this.tagListRecord.name = notes;
+  }
+
+  onIconChange(iconName: string) {
+    this.tagListRecord.iconName = iconName;
+    this.tagListRecord.type = this.recordType;
+    this.$store.commit('createTag', this.tagListRecord);
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-::v-deep .notes{
+::v-deep .notes {
   margin-top: 0;
 }
 </style>

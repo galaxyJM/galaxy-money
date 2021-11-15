@@ -3,7 +3,7 @@
     <Tabs :data-source="recordTypeList" :value.sync="recordType"/>
     <div class="tagsList">
       <router-link class="tag" :to="`/labels/edit/${tag.id}`" v-for="tag in tags" :key="tag.id">
-        <span><Icon :name='tag.name'/>{{ tag.name }}</span>
+        <span><Icon :name='tag.iconName'/>{{ tag.name }}</span>
         <Icon name='arrow'/>
       </router-link>
     </div>
