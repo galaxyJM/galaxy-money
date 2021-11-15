@@ -19,11 +19,6 @@
 import Vue from "vue";
 import {Component, Prop, Watch} from "vue-property-decorator";
 
-type Tag = {
-  id: string
-  name: string
-}
-
 @Component
 export default class Tags extends Vue {
   @Prop(Array) allTags: Tag[] | undefined;

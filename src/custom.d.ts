@@ -8,16 +8,19 @@ type RecordItem = {
 type Tag = {
     id: string
     name: string
+    iconName: string
+    type: string
 }
-type TagListModel = {
-    tags: Tag[]
-    fetch: () => Tag[]
-    save: () => void
-    create: (name: string) => 'success' | 'duplicated'
-    //联合声明 该函数只能返回这两个字符串 防止外部使用的时候自己拼写错误造成影响
-    update: (id: string, name: string) => void
-    delete: (id: string) => void
-}
+
+// type TagListModel = {
+//     tags: Tag[]
+//     fetch: () => Tag[]
+//     save: () => void
+//     create: (name: string) => 'success' | 'duplicated'
+//     //联合声明 该函数只能返回这两个字符串 防止外部使用的时候自己拼写错误造成影响
+//     update: (id: string, name: string) => void
+//     delete: (id: string) => void
+// }
 
 type RootState = {
     recordList: RecordItem[]

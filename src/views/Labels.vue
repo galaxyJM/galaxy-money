@@ -6,12 +6,12 @@
         <span><Icon :name='tag.name'/>{{ tag.name }}</span>
         <Icon name='arrow'/>
       </router-link>
-      <div @click="createNew">
-        <span><Icon name='edit'/>新建标签</span>
-        <Icon name='arrow'/>
-      </div>
     </div>
-
+    <div class="addButton">
+      <button>
+        <router-link to="/labels/addNew">新建标签</router-link>
+      </button>
+    </div>
   </Layout>
 </template>
 
@@ -40,7 +40,7 @@ export default class Labels extends Vue {
     this.$store.commit('fetchTag');
   }
 
-  createNew() {
+  addNewTag() {
     const name = window.prompt('请输入你想创建的标签名称');
     if (name) {
       this.$store.commit('createTag', name);
@@ -85,6 +85,19 @@ export default class Labels extends Vue {
     }
   }
 }
-
+.addButton{
+  text-align: center;
+}
+button {
+  outline: none;
+  border-style: none;
+  border-radius: 4px;
+  font-size: 14px;
+  background: #66b1ff;
+  line-height: 1;
+  padding: 10px;
+  margin-top: 20px;
+  a{color: white;}
+}
 
 </style>

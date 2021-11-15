@@ -39,7 +39,7 @@ const store = new Vuex.Store({
                 //返回错误信息
             }
             const id = createID().toString();
-            state.tagList.push({id: id, name: name});
+            state.tagList.push({id: id, name: name,iconName: name});
             store.commit('saveTag');
             window.alert('添加成功');
             return 'success';

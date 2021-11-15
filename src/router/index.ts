@@ -5,6 +5,7 @@ import Labels from '@/views/Labels.vue'
 import Statistics from '@/views/Statistics.vue'
 import Notfound from "@/components/Notfound.vue";
 import EditLabel from "@/components/EditLabel.vue";
+import addNewLabel from "@/components/addNewLabel.vue";
 
 Vue.use(VueRouter)
 
@@ -26,6 +27,10 @@ const routes: Array<RouteConfig> = [
     {
         path: '/labels/edit/:id',
         component: EditLabel
+    },
+    {
+        path: '/labels/addNew',
+        component: addNewLabel
     },
     {
         path: '/statistics',
