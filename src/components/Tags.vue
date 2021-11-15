@@ -8,9 +8,9 @@
         {{ item.name }}
       </li>
     </ul>
-    <button>
-      <router-link to="/labels">编辑标签列表</router-link>
-    </button>
+    <router-link to="/labels">
+      <Button button-name="编辑标签列表"/>
+    </router-link>
   </div>
 </template>
 
@@ -18,8 +18,11 @@
 // 一次性引入整个目录
 import Vue from "vue";
 import {Component, Prop, Watch} from "vue-property-decorator";
+import Button from "@/components/Button.vue";
 
-@Component
+@Component({
+  components: {Button}
+})
 export default class Tags extends Vue {
   @Prop(Array) allTags: Tag[] | undefined;
   currentTags: string[] = [];
@@ -30,7 +33,7 @@ export default class Tags extends Vue {
   }
 
   toggle(item: string) {
-    const index = this.currentTags.indexOf(item)
+    const index = this.currentTags.indexOf(item);
     if (index >= 0) {
       this.currentTags.splice(index, 1);
     } else {
@@ -90,7 +93,10 @@ export default class Tags extends Vue {
     line-height: 1;
     padding: 10px;
     margin-top: 20px;
-    a{color: white;}
+
+    a {
+      color: white;
+    }
   }
 }
 

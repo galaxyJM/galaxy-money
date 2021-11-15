@@ -5,15 +5,6 @@
       <div class="title">编辑标签</div>
     </div>
     <Notes :value="wantEditTag.name" @update:notes="onTagChange" edit-name="标签名" placeholder="请输入标签名"/>
-    <div class="tagSvg">
-      <span>图标选择</span>
-      <ul>
-        <li @click="select(item)" v-for="item in myTags" :key="item.id">
-          <Icon :name="item"/>
-          {{ item }}
-        </li>
-      </ul>
-    </div>
     <div class="container">
       <button @click="deleteTag">
         删除标签
@@ -32,21 +23,10 @@ import Notes from "@/components/Notes.vue";
   components: {Notes}
 })
 export default class EditLabel extends Vue {
-
-  myTags = ['出租车', '医疗', '口红', '手机',
-    '教育', '水果', '电影', '鞋子',
-    '衣', '食', '住', '行'];
-  selectTag = 0;
-
   //vue原生自带的ts支持中计算属性的写法
   get wantEditTag() {
     return this.$store.state.wantEditTag;
   }
-
-  select(tag: string) {
-    console.log(tag)
-  }
-
   //生命周期
   created() {
     const id = this.$route.params.id;

@@ -8,9 +8,9 @@
       </router-link>
     </div>
     <div class="addButton">
-      <button>
-        <router-link to="/labels/addNew">新建标签</router-link>
-      </button>
+      <router-link to="/labels/addNew">
+        <Button button-name="新建标签"/>
+      </router-link>
     </div>
   </Layout>
 </template>
@@ -20,10 +20,11 @@ import Tabs from "@/components/Tabs.vue";
 import recordTypeList from "@/constants/recordTypeList";
 import Vue from "vue";
 import {Component} from "vue-property-decorator";
+import Button from "@/components/Button.vue";
 
 @Component(
     {
-      components: {Tabs},
+      components: {Button, Tabs},
       computed: {
         tags() {
           return this.$store.state.tagList;
@@ -88,16 +89,6 @@ export default class Labels extends Vue {
 .addButton{
   text-align: center;
 }
-button {
-  outline: none;
-  border-style: none;
-  border-radius: 4px;
-  font-size: 14px;
-  background: #66b1ff;
-  line-height: 1;
-  padding: 10px;
-  margin-top: 20px;
-  a{color: white;}
-}
+
 
 </style>
