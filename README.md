@@ -1,4 +1,4 @@
-# moremoney
+# galaxy-money
 ## 这是一个简易的记账web应用
 
 ## 如何安装环境
