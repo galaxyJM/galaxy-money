@@ -36,11 +36,6 @@ export default class Labels extends Vue {
   get tags() {
     return this.$store.state.tagList;
   }
-
-  //生命周期
-  created() {
-    this.$store.commit('fetchTag');
-  }
 }
 
 </script>

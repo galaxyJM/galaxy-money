@@ -85,10 +85,6 @@ export default class Statistics extends Vue {
     }
   }
 
-  created() {
-    this.$store.commit('fetchRecordList');
-  }
-
   recordType = '-';
   recordTypeList = recordTypeList;
 }

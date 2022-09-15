@@ -31,10 +31,9 @@ import Tabs from "@/components/Tabs.vue";
     }
 )
 export default class Money extends Vue {
-
   recordType = '-';
   recordTypeList = recordTypeList;
-
+  
   record: RecordItem = {
     type: '-',
     currentTag: [],
@@ -43,12 +42,7 @@ export default class Money extends Vue {
     createTime: ''
   };
 
-  //生命周期
-  created() {
-    this.$store.commit('fetchRecordList');
-    this.$store.commit('fetchTag');
-  }
-
+  
   onRecordTypeChange(recordType: string) {
     this.record.type = recordType;
   }
